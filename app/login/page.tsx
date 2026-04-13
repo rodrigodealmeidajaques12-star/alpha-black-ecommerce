@@ -17,7 +17,7 @@ export default function Login() {
     }
 
     if (email === "admin@alphablack.com" && senha === "123456") {
-        localStorage.setItem("Lo")
+        localStorage.setItem("logado", "true"); //SALVA O LOGIN
         router.push("/dashboard");
     } else {
       setMensagem("Email ou senha inválidos");
