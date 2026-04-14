@@ -1,33 +1,28 @@
-"use client";
+"use client"
 import { useState } from "react";
-import { useRouter } from "next/navigation";
 
-export default function Login() {
-  const [email, setEmail] = useState("");
-  const [senha, setSenha] = useState("");
-  const [mensagem, setMensagem] = useState("");
-  const router = useRouter ();
+export default function Register() {
+    const [email, setEmail] = useState("");
+    const [senha, setSenha] = useState("");
+    const [confirmar, setConfirmar] = useState("");
+    const [mensagem, setMensagem] = useState("");
 
-  function handleLogin(e: any) {
-    e.preventDefault();
+    function handleRegister(e: any) {
+        e.preventDefault();
 
-    if (!email || !senha) {
-      setMensagem("Preencha todos os campos!");
+            if (!email || !senha || !confirmar ) {
+                setMensagem("Preencha todos os campos!");
+                return;
+            }
+            if (senha !== confirmar) {
+      setMensagem("As senhas não coincidem!");
       return;
     }
+    const users = JSON.parse(localStorage.getItem("users") || "[]");
 
-  const users = JSON.parse(localStorage.getItem("users") || "[]");
-
-  const userEncontrado = users.find(
-   (u: any) => u.email === email && u.senha === senha
-);
-
-  if (userEncontrado) {
-  localStorage.setItem("logado", "true");
-  router.push("/dashboard");
-} else {
-  setMensagem("Email ou senha inválidos");
-}
+    users.push({ email, senha });
+    localStorage.setItem("user", JSON.stringify(users));
+    setMensagem("Conta criada com sucesso!")
   }
 
   return (
@@ -38,9 +33,9 @@ export default function Login() {
           Alpha Black
         </h1>
 
-        <h2 className="text-xl text-center mb-6">Entrar na sua conta</h2>
+        <h2 className="text-xl text-center mb-6">Criar conta</h2>
 
-        <form onSubmit={handleLogin} className="space-y-4">
+        <form onSubmit={handleRegister} className="space-y-4">
 
           <input
             type="email"
@@ -58,11 +53,19 @@ export default function Login() {
             className="w-full p-3 rounded bg-gray-800 border border-gray-700"
           />
 
+          <input
+            type="password"
+            placeholder="Confirmar senha"
+            value={confirmar}
+            onChange={(e) => setConfirmar(e.target.value)}
+            className="w-full p-3 rounded bg-gray-800 border border-gray-700"
+          />
+
           <button
             type="submit"
             className="w-full bg-yellow-500 text-black py-3 rounded font-semibold"
           >
-            Entrar
+            Criar conta
           </button>
 
         </form>
@@ -77,3 +80,5 @@ export default function Login() {
     </main>
   );
 }
+
+
