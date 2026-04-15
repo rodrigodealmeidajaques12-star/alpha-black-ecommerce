@@ -1,5 +1,24 @@
 export default function Home() {
+  const produtos = [
+    {
+      id: 1,
+      nome: "Camiseta Alpha Black",
+      preco: 90.90
+    },
+    {
+      id: 2,
+      nome: "Tenis Street Black",
+      preco: 150.00
+
+    },
+    {
+      id:3,
+      nome: "Boné Black Edition",
+      preco: 79.90
+    }
+  ];
   return (
+    
     <main className="bg-black text-white min-h-screen">
       
       {/* NAVBAR */}
@@ -19,37 +38,29 @@ export default function Home() {
       </section>
 
       {/* PRODUTOS */}
+
       <section className="grid grid-cols-1 md:grid-cols-3 gap-6 p-8">
+       {produtos.map((produto) => (
+        <div key={produto.id} className="bg-gray-900 p-4 rounded-lg">
+      
+           <img src="https://via.placeholder.com/300" className="rounded mb-4" />
 
-        {/* CARD */}
-        <div className="bg-gray-900 p-4 rounded-lg">
-          <img src="https://via.placeholder.com/300" className="rounded mb-4" />
-          <h3 className="text-lg font-semibold">Camiseta Black</h3>
-          <p className="text-gray-400">R$ 99,90</p>
-          <button className="mt-3 bg-yellow-500 text-black px-4 py-2 rounded hover:bg-yellow-400">
+           <h3 className="text-lg font-semibold">
+           {produto.nome}
+           </h3>
+
+            <p className="text-gray-400">
+           R$ {produto.preco}
+           </p>
+
+           <button className="mt-3 bg-yellow-500 text-black px-4 py-2 rounded hover:bg-yellow-400">
             Comprar
-          </button>
-        </div>
+           </button>
 
-        <div className="bg-gray-900 p-4 rounded-lg">
-          <img src="https://via.placeholder.com/300" className="rounded mb-4" />
-          <h3 className="text-lg font-semibold">Moletom Premium</h3>
-          <p className="text-gray-400">R$ 199,90</p>
-          <button className="mt-3 bg-yellow-500 text-black px-4 py-2 rounded hover:bg-yellow-400">
-            Comprar
-          </button>
-        </div>
-
-        <div className="bg-gray-900 p-4 rounded-lg">
-          <img src="https://via.placeholder.com/300" className="rounded mb-4" />
-          <h3 className="text-lg font-semibold">Boné Alpha</h3>
-          <p className="text-gray-400">R$ 79,90</p>
-          <button className="mt-3 bg-yellow-500 text-black px-4 py-2 rounded hover:bg-yellow-400">
-            Comprar
-          </button>
-        </div>
-
-      </section>
+         </div>
+       ))}
+</section>
+     
 
     </main>
   );

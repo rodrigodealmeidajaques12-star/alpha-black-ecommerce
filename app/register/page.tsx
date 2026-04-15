@@ -1,11 +1,13 @@
 "use client"
 import { useState } from "react";
+import {useRouter} from "next/navigation";
 
 export default function Register() {
     const [email, setEmail] = useState("");
     const [senha, setSenha] = useState("");
     const [confirmar, setConfirmar] = useState("");
     const [mensagem, setMensagem] = useState("");
+    const router= useRouter()
 
     function handleRegister(e: any) {
         e.preventDefault();
@@ -20,10 +22,22 @@ export default function Register() {
     }
     const users = JSON.parse(localStorage.getItem("users") || "[]");
 
+    const emailExiste = users.find(    // vai verificar se existe o email ja existe 
+      (u: any) => u.email === email
+
+    );
+
+    if (emailExiste){
+      setMensagem("Esse email ja esta cadastrado!");
+      return;
+    }
+
     users.push({ email, senha });
-    localStorage.setItem("user", JSON.stringify(users));
+    localStorage.setItem("users",JSON.stringify(users));
     setMensagem("Conta criada com sucesso!")
+    router.push("/login");
   }
+
 
   return (
     <main className="bg-black text-white min-h-screen flex items-center justify-center">

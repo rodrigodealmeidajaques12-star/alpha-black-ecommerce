@@ -24,6 +24,7 @@ export default function Login() {
 
   if (userEncontrado) {
   localStorage.setItem("logado", "true");
+  localStorage.setItem("usuarioLogado" , userEncontrado.email);
   router.push("/dashboard");
 } else {
   setMensagem("Email ou senha inválidos");

@@ -1,16 +1,19 @@
 "use client"
-import {useEffect } from "react";
 import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
 
 export default function Dashboard(){
     const router = useRouter();
+    const [usuario, setUsuario] = useState ("");
 
     useEffect(() => {
         const logado = localStorage.getItem("logado");
+        const user = localStorage.getItem("usuarioLogado");
 
         if(!logado) {
             router.push("/login");//BLOQUEAR O ACESSO 
-
+        } else {
+            setUsuario(user || "");
         }
     }, [])
 
@@ -23,7 +26,7 @@ export default function Dashboard(){
         <main className="bg-black text-white min-h-screen flex flex-col items-center justify-center gap-6">
 
             <h1 className="text-3x1 text-yellow-500">
-                Bem vindo ao painel
+                Bem vindo, {usuario}
             </h1>
             <button
             onClick={handlelogout}
