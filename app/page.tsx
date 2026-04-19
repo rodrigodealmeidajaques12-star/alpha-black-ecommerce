@@ -1,3 +1,4 @@
+"use client";
 export default function Home() {
   const produtos = [
     {
@@ -17,6 +18,24 @@ export default function Home() {
       preco: 79.90
     }
   ];
+
+  function adicionarAoCarrinho(produto: any) {
+    const carrinho = JSON.parse(localStorage.getItem("carrinho") || "[]");
+
+    const produtoExistente = carrinho.find(
+      (item: any) => item.id === produto.id
+    );
+
+    if (produtoExistente) {
+      produtoExistente.quantidade +=1;
+    } else {
+      carrinho.push({ ...produto, quantidade: 1 });
+    }
+
+    localStorage.setItem("carrinho", JSON.stringify(carrinho));
+
+    alert ("Produto adicionado ao carrinho 🛒");
+  }
   return (
     
     <main className="bg-black text-white min-h-screen">
@@ -25,6 +44,7 @@ export default function Home() {
       <nav className="flex justify-between items-center p-6 border-b border-gray-800">
         <h1 className="text-2xl font-bold text-yellow-500">Alpha Black</h1>
         <div className="space-x-6">
+          <a href="/carrinho" className="hover:text-yellow-500">Carrinho</a>
           <a href="#" className="hover:text-yellow-500">Início</a>
           <a href="#" className="hover:text-yellow-500">Produtos</a>
           <a href="#" className="hover:text-yellow-500">Login</a>
@@ -53,13 +73,15 @@ export default function Home() {
            R$ {produto.preco}
            </p>
 
-           <button className="mt-3 bg-yellow-500 text-black px-4 py-2 rounded hover:bg-yellow-400">
-            Comprar
+           <button
+           onClick={() => adicionarAoCarrinho(produto)}
+           className="mt-3 bg-yellow-500 text-black px-4 py-2 rounded hover:bg-yellow-400"
+           >
+           Comprar
            </button>
-
-         </div>
-       ))}
-</section>
+        </div>
+        ))}
+       </section>
      
 
     </main>
