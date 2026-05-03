@@ -1,9 +1,11 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 
 export default function Carrinho() {
   const [carrinho, setCarrinho] = useState<any[]>([]);
+  const router = useRouter();
 
   useEffect(() => {
     const dados = JSON.parse(localStorage.getItem("carrinho") || "[]");
@@ -16,9 +18,17 @@ export default function Carrinho() {
   }, []);
 
   function finalizarCompra(){
-    localStorage.removeItem("carrinho"); // isso vai limpar o carrinho
-    setCarrinho([]); //atualiza o estado
-    alert ("Compra finalizada com sucesso! 🎉 ");
+    const pedidos = JSON.parse(localStorage.getItem("pedidos") || "[]");
+    
+    pedidos.push({
+      itens: carrinho,
+      total,
+      data: new Date().toISOString()
+    });
+    localStorage.setItem("pedidos", JSON.stringify(pedidos));
+    localStorage.removeItem("carrinho");
+    setCarrinho([]);
+    router.push("/sucesso");
   }
 
   function aumentarQuantidade(index: number) {
